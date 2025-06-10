@@ -37,9 +37,9 @@ public class HeroSectionController {
 
         updates.forEach((key, value) -> {
             switch (key) {
-                case "header" -> existing.setHeading(value);
-                case "subtext1" -> existing.setSubtext1(value);
-                case "subtext1" -> existing.setSubtext2(value);
+                case "heading" -> existing.setHeading(value);
+                case "subText1" -> existing.setSubText1(value);
+                case "subText2" -> existing.setSubText2(value);
             }
         });
         return heroSectionRepository.save(existing);
