@@ -8,7 +8,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/hero-section")
-@CrossOrigin(origins = "*")
 public class HeroSectionController {
 
    private final HeroSectionRepository heroSectionRepository;
