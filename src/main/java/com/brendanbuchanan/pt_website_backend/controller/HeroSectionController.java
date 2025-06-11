@@ -44,5 +44,14 @@ public class HeroSectionController {
         return heroSectionRepository.save(existing);
     }
 
+    @GetMapping
+    public HeroSectionModel getHeroSection() {
+        HeroSectionModel latest = heroSectionRepository.findTopByOrderByIdDesc();
+        if (latest == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hero section not found");
+        }
+        return latest;
+    }
+
 
 }
