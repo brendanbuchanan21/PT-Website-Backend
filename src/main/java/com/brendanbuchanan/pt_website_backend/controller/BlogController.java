@@ -66,7 +66,7 @@ public class BlogController {
             @RequestParam("author") String author,
             @RequestParam("date") String date,
             @RequestParam("description") String description,
-            @RequestParam("file") MultipartFile file,
+            @RequestParam(value="file", required=false) MultipartFile file,
             @RequestParam("isPublished") String isPublishedStr
     ) {
         try {
@@ -82,8 +82,11 @@ public class BlogController {
 
             // now take the file and put it into the bucket
             // then store the returned string into the imageUrl and update it...
-            String imageUrl = gcsFileService.uploadFile(file);
-            blog.setImageUrl(imageUrl);
+            if (file != null) {
+                String imageUrl = gcsFileService.uploadFile(file);
+                blog.setImageUrl(imageUrl);
+            }
+
             // then take the boolean "string" and turn it back into a boolean and save into db as well
             Boolean isPublished = Boolean.parseBoolean(isPublishedStr);
             blog.setPublished(isPublished);

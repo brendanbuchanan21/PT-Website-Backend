@@ -1,10 +1,10 @@
 package com.brendanbuchanan.pt_website_backend.model;
 
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
-@Table( name = "blog_model")
+@Table(name = "blog_model")
 public class BlogModel {
 
     @Id
@@ -17,8 +17,9 @@ public class BlogModel {
     private String imageUrl;
     private boolean isPublished;
 
-    //constructors
-    public BlogModel() {}
+    // Constructors
+    public BlogModel() {
+    }
 
     public BlogModel(String title, String author, String date, String description, String imageUrl, boolean isPublished) {
         this.title = title;
@@ -29,19 +30,62 @@ public class BlogModel {
         this.isPublished = isPublished;
     }
 
-    //create getters and setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
-    public String getAuthor() { return author; }
-    public void setAuthor(String author) { this.author = author; }
-    public String getDate() { return date; }
-    public void setDate(String date) { this.date = date; }
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    public String getImageUrl() { return imageUrl; }
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
-    public boolean isPublished() { return isPublished; }
-    public void setPublished(boolean isPublished) { this.isPublished = isPublished; }
+    // Getters and setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    @JsonProperty("isPublished")
+    public boolean isPublished() {
+        return isPublished;
+    }
+
+    @JsonProperty("isPublished")
+    public void setPublished(boolean published) {
+        this.isPublished = published;
+    }
 }
