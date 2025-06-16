@@ -15,16 +15,18 @@ public class BlogModel {
     private String date;
     private String description;
     private String imageUrl;
+    private boolean isPublished;
 
     //constructors
     public BlogModel() {}
 
-    public BlogModel(String title, String author, String date, String description, String imageUrl) {
+    public BlogModel(String title, String author, String date, String description, String imageUrl, boolean isPublished) {
         this.title = title;
         this.author = author;
         this.date = date;
         this.description = description;
         this.imageUrl = imageUrl;
+        this.isPublished = isPublished;
     }
 
     //create getters and setters
@@ -40,4 +42,6 @@ public class BlogModel {
     public void setDescription(String description) { this.description = description; }
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public boolean isPublished() { return isPublished; }
+    public void setPublished(boolean isPublished) { this.isPublished = isPublished; }
 }
