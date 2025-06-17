@@ -11,7 +11,11 @@ public class WebSecurityConfig {
     public FilterRegistrationBean<FirebaseAuthFilter> firebaseAuthFilterRegistration(FirebaseAuthFilter filter) {
         FilterRegistrationBean<FirebaseAuthFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(filter);
-        registration.addUrlPatterns("/api/protected/*"); // protect these routes
+        registration.addUrlPatterns(
+                "/api/blog/create",
+                "/api/blog/patch/*",
+                "/api/blog/delete/*"
+        ); // protect these routes
         return registration;
     }
 }
