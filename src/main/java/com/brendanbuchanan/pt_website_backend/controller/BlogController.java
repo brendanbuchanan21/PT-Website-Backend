@@ -6,6 +6,7 @@ import com.brendanbuchanan.pt_website_backend.repository.BlogRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
@@ -98,7 +99,16 @@ public class BlogController {
             return ResponseEntity.badRequest().body(e.getMessage() + "failed to update blog post");
         }
     }
-
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<String> deleteBlogPost(@PathVariable Long id) {
+        if (!blogRepository.existsById(id)) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("Blog with ID " + id + " not found");
+        }
+        blogRepository.deleteById(id);
+        return ResponseEntity.ok("Blog deleted");
+    }
 
 
 }
