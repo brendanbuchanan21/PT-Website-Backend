@@ -13,6 +13,7 @@ public class BlogModel {
     private String title;
     private String author;
     private String date;
+    @Lob
     private String description;
     private String imageUrl;
     private boolean isPublished;
