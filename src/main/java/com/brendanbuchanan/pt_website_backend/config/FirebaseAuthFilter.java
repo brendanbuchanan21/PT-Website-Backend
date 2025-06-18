@@ -14,21 +14,35 @@ public class FirebaseAuthFilter implements Filter {
             throws IOException, ServletException {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        String authHeader = httpRequest.getHeader("Authorization");
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "Missing or invalid Authorization header.");
+        // 👇 Always add CORS headers manually in the filter
+        httpResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        httpResponse.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
+        httpResponse.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
+        httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
+
+        // ✅ Bypass preflight request
+        if ("OPTIONS".equalsIgnoreCase(httpRequest.getMethod())) {
+            httpResponse.setStatus(HttpServletResponse.SC_OK);
             return;
         }
 
-        String token = authHeader.substring(7); // Remove "Bearer "
+        String authHeader = httpRequest.getHeader("Authorization");
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Missing or invalid Authorization header");
+            return;
+        }
+
+        String idToken = authHeader.substring(7); // Remove "Bearer "
 
         try {
-            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(token);
+            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
             httpRequest.setAttribute("firebaseUser", decodedToken);
             chain.doFilter(request, response);
         } catch (Exception e) {
-            ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Firebase ID token.");
+            httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Firebase token");
         }
     }
 }
