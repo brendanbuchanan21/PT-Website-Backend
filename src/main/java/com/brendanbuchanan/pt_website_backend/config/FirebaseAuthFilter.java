@@ -16,8 +16,9 @@ public class FirebaseAuthFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
+        String allowedOrigin = System.getenv("FRONTEND_ORIGIN");
         // 👇 Always add CORS headers manually in the filter
-        httpResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        httpResponse.setHeader("Access-Control-Allow-Origin", allowedOrigin != null ? allowedOrigin : "http://localhost:3000");
         httpResponse.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
         httpResponse.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
         httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
