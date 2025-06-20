@@ -13,6 +13,7 @@ import java.util.Base64;
 
 
 // essentially just a connection to firebase
+@Configuration
 public class FirebaseConfig {
 
     @PostConstruct
